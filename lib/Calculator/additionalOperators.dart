@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math'; // Import for log and exp functions
+import 'dart:math';
 
 class AdditionalOperators extends StatelessWidget {
   final Function(String) onButtonPressed;

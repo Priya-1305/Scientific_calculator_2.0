@@ -19,14 +19,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 1, // Take up 1 part of the remaining space
+              flex: 1,
               child: SizedBox(
-                // Add top spacing
-                height: 100.0, // Adjust for your desired top spacing
+                height: 100.0,
               ),
             ),
             Expanded(
-              flex: 4, // Adjust this flex to your layout needs
+              flex: 4,
               child: Center(
                 child: Text(
                   "Beyond numbers, there's calculation",

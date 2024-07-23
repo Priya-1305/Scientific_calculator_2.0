@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'logarithms_drawer.dart'; // Import the LogarithmDrawer
+import 'logarithms_drawer.dart';
 import 'Trignometry_drawer.dart';
-import 'Matrix.dart';
+import 'additionalOperators.dart';
 
 class AdvancedOperationsDialog extends StatelessWidget {
   final Function(String) onButtonPressed;

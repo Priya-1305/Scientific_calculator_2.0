@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'dart:math' as Math;
-import 'dart:math'; // Import for log and exp functions
+import 'dart:math';
 import 'Drawer.dart';
 import 'AdvancedOperationsDialog.dart' as advanced;
-import 'logarithms_drawer.dart'; // Import the LogarithmDrawer
+import 'logarithms_drawer.dart';
 import 'package:math_expressions/math_expressions.dart' as math_pkg;
 import 'package:expressions/expressions.dart' as exp_pkg;
 
@@ -21,8 +21,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   double _num1 = 0.0;
   double _num2 = 0.0;
   String _operand = "";
-  double _customBase = 10; // Default base value for custom log
-
+  double _customBase = 10;
   void buttonPressed(String buttonText) {
     setState(() {
       if (buttonText == "C") {
@@ -31,9 +30,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       } else if (buttonText == "=") {
         try {
           Parser p = Parser();
-          Expression exp = p.parse(_input
-              .replaceAll('×', '*')
-              .replaceAll('÷', '/')); // Replace symbols if necessary
+          Expression exp =
+              p.parse(_input.replaceAll('×', '*').replaceAll('÷', '/'));
           ContextModel cm = ContextModel();
           double eval = exp.evaluate(EvaluationType.REAL, cm);
           _result = eval.toString();
@@ -48,11 +46,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   void _evaluateLogarithm() {
     try {
-      // Debugging statement
       print('Input: 100');
 
       if (_input.startsWith("log(")) {
-        // Extract the number part for log calculation
         String numberPart = _input.substring(4, _input.length - 1);
         double number = double.parse(numberPart);
         if (number > 0) {
@@ -62,7 +58,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           _result = "Error: Non-positive number for log";
         }
       } else if (_input.startsWith("ln(")) {
-        // Extract the number part for ln calculation
         String numberPart = _input.substring(3, _input.length - 1);
         double number = double.parse(numberPart);
         if (number > 0) {
@@ -72,13 +67,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           _result = "Error: Non-positive number for ln";
         }
       } else if (_input.startsWith("antilog(")) {
-        // Extract the number part for antilog calculation
         String numberPart = _input.substring(8, _input.length - 1);
         double number = double.parse(numberPart);
         double result = exp(number); // Antilog (base e)
         _result = result.toString();
       } else if (_input.startsWith("customLog(")) {
-        // Extract the number part for custom base logarithm
         String numberPart = _input.substring(10, _input.length - 1);
         double number = double.parse(numberPart);
         if (number > 0 && _customBase > 0) {
@@ -92,11 +85,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         _result = "Error: Invalid input";
       }
 
-      // Debugging statement
       print('Result: $_result');
-      _input = _result; // Update input to show result
+      _input = _result;
     } catch (e) {
-      // Handle parsing errors or any other unexpected issues
       _result = "Error: ${e.toString()}";
     }
   }
@@ -257,13 +248,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               buildButton("7"),
               buildButton("8"),
               buildButton("9"),
-              buildButton("/"),
+              buildButton("÷"),
             ]),
             Row(children: [
               buildButton("4"),
               buildButton("5"),
               buildButton("6"),
-              buildButton("*"),
+              buildButton("X"),
             ]),
             Row(children: [
               buildButton("1"),
