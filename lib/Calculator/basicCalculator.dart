@@ -22,6 +22,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   double _num2 = 0.0;
   String _operand = "";
   double _customBase = 10;
+
   void buttonPressed(String buttonText) {
     setState(() {
       if (buttonText == "C") {
@@ -29,79 +30,36 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         _result = "";
       } else if (buttonText == "=") {
         try {
+          // Handle custom logarithms
+          String modifiedInput = _input
+              .replaceAllMapped(
+                RegExp(r'log\(([^)]+)\)'),
+                (match) {
+                  final value = match.group(1);
+                  return 'ln($value) / ln(10)';
+                },
+              )
+              .replaceAllMapped(
+                RegExp(r'antilog\(([^)]+)\)'),
+                (match) {
+                  final value = match.group(1);
+                  return 'Math.exp(10, $value)';
+                },
+              )
+              .replaceAll('×', '*')
+              .replaceAll('÷', '/');
+
           Parser p = Parser();
-          Expression exp =
-              p.parse(_input.replaceAll('×', '*').replaceAll('÷', '/'));
+          Expression exp = p.parse(modifiedInput);
           ContextModel cm = ContextModel();
           double eval = exp.evaluate(EvaluationType.REAL, cm);
           _result = eval.toString();
+          print("Result: $_result");
         } catch (e) {
           _result = "Error";
         }
       } else {
         _input += buttonText;
-      }
-    });
-  }
-
-  void _evaluateLogarithm() {
-    try {
-      print('Input: 100');
-
-      if (_input.startsWith("log(")) {
-        String numberPart = _input.substring(4, _input.length - 1);
-        double number = double.parse(numberPart);
-        if (number > 0) {
-          double result = log(number) / log(10); // Base-10 logarithm
-          _result = result.toString();
-        } else {
-          _result = "Error: Non-positive number for log";
-        }
-      } else if (_input.startsWith("ln(")) {
-        String numberPart = _input.substring(3, _input.length - 1);
-        double number = double.parse(numberPart);
-        if (number > 0) {
-          double result = log(number); // Natural logarithm
-          _result = result.toString();
-        } else {
-          _result = "Error: Non-positive number for ln";
-        }
-      } else if (_input.startsWith("antilog(")) {
-        String numberPart = _input.substring(8, _input.length - 1);
-        double number = double.parse(numberPart);
-        double result = exp(number); // Antilog (base e)
-        _result = result.toString();
-      } else if (_input.startsWith("customLog(")) {
-        String numberPart = _input.substring(10, _input.length - 1);
-        double number = double.parse(numberPart);
-        if (number > 0 && _customBase > 0) {
-          double result =
-              log(number) / log(_customBase); // Custom base logarithm
-          _result = result.toString();
-        } else {
-          _result = "Error: Invalid number or base for customLog";
-        }
-      } else {
-        _result = "Error: Invalid input";
-      }
-
-      print('Result: $_result');
-      _input = _result;
-    } catch (e) {
-      _result = "Error: ${e.toString()}";
-    }
-  }
-
-  void _onEvaluate() {
-    setState(() {
-      try {
-        final expression = exp_pkg.Expression.parse(_input);
-        final evaluator = const exp_pkg.ExpressionEvaluator();
-        final result = evaluator.eval(expression, {});
-
-        _result = result.toString();
-      } catch (e) {
-        _result = "Error";
       }
     });
   }
@@ -248,13 +206,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               buildButton("7"),
               buildButton("8"),
               buildButton("9"),
-              buildButton("÷"),
+              buildButton("/"),
             ]),
             Row(children: [
               buildButton("4"),
               buildButton("5"),
               buildButton("6"),
-              buildButton("X"),
+              buildButton("*"),
             ]),
             Row(children: [
               buildButton("1"),
@@ -270,7 +228,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ]),
             Row(children: [
               buildButton("C"),
-              buildButton("=", onPressed: _onEvaluate),
+              buildButton("="),
               buildButton(")"),
               buildButton("(")
             ]),
