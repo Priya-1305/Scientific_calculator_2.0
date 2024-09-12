@@ -90,15 +90,25 @@ The modern UI ensures a pleasant user experience that meets the expectations of 
 
 The current implementation of the scientific calculator focuses on core mathematical operations, including basic arithmetic, logarithmic, and trigonometric functions. However, there are several exciting directions for future development to enhance the app's capabilities:
 
-1. **Calculus Mode **
+## 1. **Calculus Mode **
+
 Integration and Differentiation: Introduce features for calculus operations such as finding integrals and derivatives. This would include definite and indefinite integrals and various differentiation rules.
 Graphing: Implement graphing functionalities to visualize functions, derivatives, and integrals. This could help users understand the behavior of functions more intuitively.
-2. **Physics Mode **
-Advanced Physics Calculations: Include functionalities for physics-related calculations, such as kinematics, dynamics, and thermodynamics. This could cover topics like projectile motion, force, energy, and work.
+
+
+## 2. **Physics Mode**
+
+- Advanced Physics Calculations: Include functionalities for physics-related calculations, such as kinematics, dynamics, and thermodynamics. This could cover topics like projectile motion, force, energy, and work.
 Unit Conversions: Add a comprehensive unit conversion tool for physical quantities, which could support conversions between metric and imperial units, as well as between different physical units (e.g., Newtons to pounds-force).
+
+
 3. Enhanced UI/UX
-Customizable Themes: Allow users to choose from various themes or create custom themes to personalize the app's appearance.
-Voice Input: Integrate voice recognition for inputting mathematical expressions and calculations, providing a more hands-free experience.
+
+- Customizable Themes: Allow users to choose from various themes or create custom themes to personalize the app's appearance.
+- Voice Input: Integrate voice recognition for inputting mathematical expressions and calculations, providing a more hands-free          experience.
+
+
 4. Educational Features
-Tutorials and Help Sections: Provide in-app tutorials and help sections to guide users on how to use advanced features, understand mathematical concepts, and apply them effectively.
-Problem Solver: Implement a problem-solving assistant that can guide users through complex calculations and provide step-by-step solutions.
+
+- Tutorials and Help Sections: Provide in-app tutorials and help sections to guide users on how to use advanced features, understand mathematical concepts, and apply them effectively.
+- Problem Solver: Implement a problem-solving assistant that can guide users through complex calculations and provide step-by-step solutions.
