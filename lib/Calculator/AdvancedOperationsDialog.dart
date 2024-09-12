@@ -125,14 +125,14 @@ class AdvancedOperationsDialog extends StatelessWidget {
                 _showTrignometryDrawer(context);
               },
             ),
-            ListTile(
-              leading: Icon(Icons.show_chart, color: Colors.white),
-              title: Text('Matrix', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(context);
-                onButtonPressed('tan');
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.show_chart, color: Colors.white),
+            //   title: Text('Matrix', style: TextStyle(color: Colors.white)),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     onButtonPressed('tan');
+            //   },
+            // ),
           ],
         ),
       ),

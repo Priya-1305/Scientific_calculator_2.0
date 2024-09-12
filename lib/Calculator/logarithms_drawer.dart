@@ -46,7 +46,7 @@ class LogarithmDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.exposure, color: Colors.white),
-              title: Text('antolog', style: TextStyle(color: Colors.white)),
+              title: Text('antilog', style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
                 onButtonPressed('antilog(');

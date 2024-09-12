@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+// import 'dart:math';
 
 class TrignometryDrawer extends StatelessWidget {
   final Function(String) onButtonPressed;
@@ -52,14 +52,14 @@ class TrignometryDrawer extends StatelessWidget {
                 onButtonPressed('tan(');
               },
             ),
-            ListTile(
-              leading: Icon(Icons.exposure, color: Colors.white),
-              title: Text('Sin Inverse', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(context);
-                onButtonPressed('Arc Sine (asin(');
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.exposure, color: Colors.white),
+            //   title: Text('Sin Inverse', style: TextStyle(color: Colors.white)),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     onButtonPressed('asin(');
+            //   },
+            // ),
           ],
         ),
       ),

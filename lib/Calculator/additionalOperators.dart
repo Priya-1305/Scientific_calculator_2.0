@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+// import 'dart:math';
 
 class AdditionalOperators extends StatelessWidget {
   final Function(String) onButtonPressed;
@@ -58,15 +58,6 @@ class AdditionalOperators extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 onButtonPressed('%');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.exposure, color: Colors.white),
-              title:
-                  Text('explore more', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(context);
-                onButtonPressed('explore more');
               },
             ),
           ],

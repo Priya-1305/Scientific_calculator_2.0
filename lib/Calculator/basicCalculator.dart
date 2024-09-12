@@ -1,14 +1,7 @@
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'dart:math' as Math;
-import 'dart:math';
-import 'Drawer.dart';
 import 'AdvancedOperationsDialog.dart' as advanced;
-import 'logarithms_drawer.dart';
-import 'package:math_expressions/math_expressions.dart' as math_pkg;
-import 'package:expressions/expressions.dart' as exp_pkg;
+import 'trigoLogic.dart';
 
 class CalculatorScreen extends StatefulWidget {
   @override
@@ -18,10 +11,7 @@ class CalculatorScreen extends StatefulWidget {
 class _CalculatorScreenState extends State<CalculatorScreen> {
   String _input = "";
   String _result = "0";
-  double _num1 = 0.0;
-  double _num2 = 0.0;
-  String _operand = "";
-  double _customBase = 10;
+  bool is_Degree = true; // Toggle for degree/radian mode
 
   void buttonPressed(String buttonText) {
     setState(() {
@@ -43,25 +33,42 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 RegExp(r'antilog\(([^)]+)\)'),
                 (match) {
                   final value = match.group(1);
-                  return 'Math.exp(10, $value)';
+                  return 'pow(10, $value)';
                 },
               )
               .replaceAll('×', '*')
               .replaceAll('÷', '/');
+          if (is_Degree) {
+            modifiedInput = modifiedInput.replaceAllMapped(
+                RegExp(r'(sin|cos|tan)\((.*?)\)'),
+                (Match m) =>
+                    '${m.group(1)}(${_convertToRadians(double.parse(m.group(2)!))})');
+          }
 
           Parser p = Parser();
-          Expression exp = p.parse(modifiedInput);
           ContextModel cm = ContextModel();
+          cm.bindFunction(AsinFunction());
+          cm.bindFunction(AcosFunction());
+          cm.bindFunction(AtanFunction());
+          Expression exp = p.parse(modifiedInput);
           double eval = exp.evaluate(EvaluationType.REAL, cm);
+
           _result = eval.toString();
-          print("Result: $_result");
         } catch (e) {
-          _result = "Error";
+          _result = 'Error';
         }
+      } else if (buttonText == 'DEG') {
+        is_Degree = true;
+      } else if (buttonText == 'RAD') {
+        is_Degree = false;
       } else {
         _input += buttonText;
       }
     });
+  }
+
+  double _convertToRadians(double degrees) {
+    return degrees * (3.14159265358979323846 / 180.0);
   }
 
   void onDrawerButtonPressed(String buttonText) {
@@ -91,59 +98,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       },
     );
   }
-
-  // void _showCustomBaseDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         backgroundColor: Colors.black,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(15.0),
-  //         ),
-  //         title:
-  //             Text('Enter Base Value', style: TextStyle(color: Colors.white)),
-  //         content: TextField(
-  //           style: TextStyle(color: Colors.white),
-  //           keyboardType: TextInputType.number,
-  //           onChanged: (value) {
-  //             try {
-  //               _customBase = double.parse(value);
-  //             } catch (e) {
-  //               _customBase = 10.0; // Default value if input is invalid
-  //             }
-  //           },
-  //           decoration: InputDecoration(
-  //             hintText: "Enter base value",
-  //             hintStyle: TextStyle(color: Colors.grey),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('OK', style: TextStyle(color: Colors.white)),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //               if (_input.isNotEmpty) {
-  //                 try {
-  //                   _num1 = double.parse(_input);
-  //                   if (_num1 > 0 && _customBase > 0) {
-  //                     _result = (log(_num1) / log(_customBase)).toString();
-  //                     _input = _result;
-  //                   } else {
-  //                     _result = "Error"; // Handle log for non-positive numbers
-  //                   }
-  //                 } catch (e) {
-  //                   _result = "Error";
-  //                 }
-  //               }
-  //               setState(() {});
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +155,29 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           Expanded(
             child: Divider(),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Radians',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              Switch(
+                value: is_Degree,
+                onChanged: (value) {
+                  setState(() {
+                    is_Degree = value;
+                  });
+                },
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+              ),
+              Text(
+                'Degrees',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ],
+          ),
           Column(children: [
             Row(children: [
               buildButton("7"),
@@ -246,9 +223,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 30, 11, 10),
-                Color.fromARGB(255, 34, 15, 15),
-                Color.fromARGB(255, 32, 16, 10)
+                Color.fromARGB(255, 9, 9, 9),
+                Color.fromARGB(255, 8, 8, 8),
+                Color.fromARGB(255, 6, 6, 6)
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -257,10 +234,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           ),
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
-              padding: EdgeInsets.all(24.0),
-              backgroundColor: Colors.black,
+              padding: EdgeInsets.all(21.0),
+              backgroundColor: Color.fromARGB(255, 18, 7, 7),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(25.0),
               ),
             ),
             child: Text(
